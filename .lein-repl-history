@@ -422,3 +422,10 @@ q
 (seq-merge [4] [1 2 6 7])
 (cons 1 '())
 quit
+(use 'recursion :reload-all)
+(seq-merge [4] [1 2 6 7])
+(seq-merge [1 5 7 9] [2 2 8 10])
+(use 'recursion :reload-all)
+(merge-sort [])
+(merge-sort [1 2 3])
+(merge-sort [5 3 4 17 2 100 1])

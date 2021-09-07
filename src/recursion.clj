@@ -153,16 +153,21 @@
 (defn seq-merge [a-seq b-seq]
   (if (and (empty? a-seq) (empty? b-seq))
     '()
-    (let [cur-a (first a-seq)
-          cur-b (first b-seq)]
+    (let [ma (first a-seq)
+          mb (first b-seq)]
       (cond
-        (empty? cur-a) (cons cur-b (seq-merge a-seq (rest b-seq)))
-        (empty? cur-b) (cons cur-a (seq-merge (rest a-seq) b-seq))
-        (< cur-a cur-b) (cons cur-a (seq-merge (rest a-seq) b-seq))
-        :else (cons cur-b (seq-merge a-seq (rest b-seq)))))))
+        (= ma nil) (cons mb (seq-merge a-seq (rest b-seq)))
+        (= mb nil) (cons ma (seq-merge (rest a-seq) b-seq))
+        :else
+          (if (< ma mb)
+            (cons ma (seq-merge (rest a-seq) b-seq))
+            (cons mb (seq-merge a-seq (rest b-seq))))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    a-seq
+    (let [[lower upper] (halve a-seq)]
+      (seq-merge (merge-sort lower) (merge-sort upper)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
